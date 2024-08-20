@@ -11,13 +11,8 @@ terraform {
 
 terraform {
   backend "s3" {
-    bucket = var.bucket
+    bucket = "bucket-teste124"
     key    = "terraformstate/terraform.tfstate"
     region = "us-east-1"
   }
-}
-
-variable "bucket" {
-  description = "The name of the S3 bucket to store the Terraform state"
-  type        = string
 }
