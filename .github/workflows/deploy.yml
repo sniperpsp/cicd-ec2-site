@@ -1,15 +1,19 @@
 name: Manage EC2 Environment
 
 on:
+  push:
+    paths:
+      - 'to-do.zip'
+      - 'user_data.sh'
+      
   workflow_dispatch:
     inputs:
       action:
-        description: 'Choose action: apply or destroy'
+        description: 'Choose action: destroy'
         required: true
-        default: 'apply'
+        default: 'destroy'
         type: choice
         options:
-          - apply
           - destroy
 
 jobs:
@@ -35,7 +39,7 @@ jobs:
       working-directory: .
 
     - name: Terraform Apply
-      if: github.event.inputs.action == 'apply'
+      if: github.event_name == 'push'
       run: terraform apply -auto-approve
       working-directory: .
 
