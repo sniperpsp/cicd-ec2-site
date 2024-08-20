@@ -63,5 +63,3 @@ docker build -t banco-de-dados -f Dockerfile-postgres .
 
 # Subir os serviços com docker-compose
 docker-compose up -d
-
-cd /mnt
