@@ -24,10 +24,6 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
 
-    - name: Terraform Init
-      run: terraform init -backend-config="bucket=$BUCKET"
-      working-directory: .
-
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
       working-directory: .
