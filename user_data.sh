@@ -50,6 +50,12 @@ git clone https://github.com/sniperpsp/cicd-ec2-site.git /mnt/site
 
 # Navegar para a pasta onde o docker-compose.yml está localizado
 cd /mnt/site
+unzip to-do.zip -d /mnt/site
+cd /mnt/site/to-do-Docker-main
+mv agenda/ /mnt/site/
+cd /mnt/site/
+rm -rf to-do-Docker-main/
+
 
 # Construir as imagens Docker
 docker build -t node-todo-app .
