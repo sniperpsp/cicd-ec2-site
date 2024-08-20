@@ -15,6 +15,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Create .env file
+      run: |
+        echo "BUCKET=${{ secrets.BUCKET }}" > .env
+
+    - name: Load .env file
+      run: |
+        echo "Loading .env file"
+        set -a
+        source .env
+        set +a
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -26,13 +37,13 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -backend-config="bucket=$BUCKET"
       working-directory: .
 
     - name: Terraform Destroy
       run: terraform destroy -auto-approve
       working-directory: .
 
-    #- name: Terraform Apply
-      #run: terraform apply -auto-approve
-      #working-directory: .
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: .
