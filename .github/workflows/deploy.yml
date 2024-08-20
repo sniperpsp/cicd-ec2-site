@@ -14,17 +14,18 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
+  
     - name: Create .env file
       run: |
         echo "BUCKET=${{ secrets.BUCKET }}" > .env
-
+  
     - name: Load .env file
       run: |
         echo "Loading .env file"
         set -a
         source .env
         set +a
+        echo "BUCKET is set to $BUCKET"
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
