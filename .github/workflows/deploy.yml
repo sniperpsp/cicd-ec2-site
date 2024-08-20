@@ -1,10 +1,16 @@
-name: Deploy to EC2
+name: Manage EC2 Environment
 
 on:
-  push:
-    paths:
-      - 'to-do.zip'
-      - 'user_data.sh'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Choose action: apply or destroy'
+        required: true
+        default: 'apply'
+        type: choice
+        options:
+          - apply
+          - destroy
 
 jobs:
   deploy:
@@ -13,7 +19,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-  
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
@@ -25,13 +31,15 @@ jobs:
       uses: hashicorp/setup-terraform@v1
 
     - name: Terraform Init
-      run: terraform init 
-      working-directory: .
-
-    - name: Terraform Destroy
-      run: terraform destroy -auto-approve
+      run: terraform init
       working-directory: .
 
     - name: Terraform Apply
+      if: github.event.inputs.action == 'apply'
       run: terraform apply -auto-approve
+      working-directory: .
+
+    - name: Terraform Destroy
+      if: github.event.inputs.action == 'destroy'
+      run: terraform destroy -auto-approve
       working-directory: .
