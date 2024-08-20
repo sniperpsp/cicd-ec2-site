@@ -53,7 +53,7 @@ cd /mnt/site
 unzip to-do.zip -d /mnt/site
 cd /mnt/site/to-do-Docker-main
 mv agenda/ /mnt/site/
-cd /mnt/site/
+cd /mnt/site/agenda/node-todo-app/
 rm -rf to-do-Docker-main/
 
 
