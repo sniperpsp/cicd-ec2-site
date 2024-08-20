@@ -1,0 +1,36 @@
+name: Deploy to EC2
+
+on:
+  push:
+    paths:
+      - 'to-do.zip'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      run: terraform init
+      working-directory: ./path/to/your/terraform/files
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: ./path/to/your/terraform/files
+
+    - name: SSH to EC2 and deploy
+      uses: appleboy/ssh-action@v0.1.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_KEY }}
+        script: |
+          cd /mnt/site
+          docker-compose pull
+          docker-compose up -d
