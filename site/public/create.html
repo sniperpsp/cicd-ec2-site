@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criação Serviços AWS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Criação Serviços AWS</h1>
+    <form id="servicesForm">
+      <label>
+        <input type="checkbox" id="vpcCheckbox" name="components" value="vpc"> VPC
+      </label><br><br>
+      <label>
+        <input type="checkbox" id="ec2Checkbox" name="components" value="ec2"> EC2
+      </label><br><br>
+      <div id="ec2Options" style="display: none;">
+        <div class="form-group">
+          <label for="ami">AMI:</label>
+          <input type="text" id="ami" name="ami" placeholder="Exemplo: ami-0b72821e2f351e396">
+          <small>ID da AMI (Amazon Machine Image). Exemplo: ami-0b72821e2f351e396</small>
+        </div><br>
+        <div class="form-group">
+          <label for="instanceType">Instance Type:</label>
+          <input type="text" id="instanceType" name="instanceType" placeholder="Exemplo: t3.micro">
+          <small>Tipo da instância EC2. Exemplo: t3.micro</small>
+        </div><br>
+        <div class="form-group">
+          <label for="associatePublicIp">Associate Public IP Address:</label>
+          <input type="checkbox" id="associatePublicIp" name="associatePublicIp">
+          <small>Associar um endereço IP público à instância.</small>
+        </div><br>
+        <div class="form-group">
+          <label for="disableApiTermination">Disable API Termination:</label>
+          <input type="checkbox" id="disableApiTermination" name="disableApiTermination">
+          <small>Desabilitar a terminação da instância via API.</small>
+        </div><br>
+        <div class="form-group">
+          <label for="keyName">Key Name:</label>
+          <input type="text" id="keyName" name="keyName" placeholder="Exemplo: my-key-pair">
+          <small>Nome do par de chaves para acessar a instância. Exemplo: my-key-pair</small>
+        </div><br>
+        <div id="subnetSecurityGroupOptions">
+          <div class="form-group">
+            <label for="subnetId">Subnet ID:</label>
+            <input type="text" id="subnetId" name="subnetId" placeholder="Exemplo: subnet-12345678">
+            <small>ID da sub-rede onde a instância será lançada. Exemplo: subnet-12345678</small>
+          </div><br>
+          <div class="form-group">
+            <label for="securityGroups">Security Groups:</label>
+            <input type="text" id="securityGroups" name="securityGroups" placeholder="Exemplo: sg-12345678">
+            <small>IDs dos grupos de segurança. Exemplo: sg-12345678</small>
+          </div><br>
+        </div>
+        <div class="form-group">
+          <label for="userData">User Data:</label>
+          <textarea id="userData" name="userData" placeholder="Insira o script de user data"></textarea>
+          <small>Script de inicialização para a instância.</small>
+        </div><br>
+        <div class="form-group">
+          <label for="iamInstanceProfile">IAM Instance Profile:</label>
+          <input type="text" id="iamInstanceProfile" name="iamInstanceProfile" placeholder="Exemplo: role_acesso_ssm_instance_profile">
+          <small>Perfil de instância IAM. Exemplo: role_acesso_ssm_instance_profile</small>
+        </div><br>
+        <label>
+          <input type="checkbox" id="rootBlockDeviceCheckbox" name="rootBlockDeviceCheckbox"> Root Block Device
+        </label><br><br>
+        <div id="rootBlockDeviceOptions" style="display: none;">
+          <div class="form-group">
+            <label for="volumeType">Volume Type:</label>
+            <input type="text" id="volumeType" name="volumeType" placeholder="Exemplo: gp3">
+            <small>Tipo de volume do dispositivo raiz. Exemplo: gp3</small>
+          </div><br>
+          <div class="form-group">
+            <label for="volumeSize">Volume Size:</label>
+            <input type="number" id="volumeSize" name="volumeSize" placeholder="Exemplo: 30">
+            <small>Tamanho do volume em GB. Exemplo: 30</small>
+          </div><br>
+        </div>
+      </div>
+      <button type="submit">Criar Serviços</button>
+    </form>
+    <h2>Output</h2>
+    <pre id="output"></pre>
+    <button type="button" id="backButton">Voltar</button>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
