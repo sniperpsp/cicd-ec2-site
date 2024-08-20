@@ -1,6 +1,6 @@
 provider "aws" {
   region = "us-east-1"
-  profile = "bia"  #troque par ao nome do seu perfil que foi configurado no aws configure
+  #profile = "bia"  #troque par ao nome do seu perfil que foi configurado no aws configure
 }
 
 resource "aws_instance" "ec2_tf" {
