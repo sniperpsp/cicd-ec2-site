@@ -26,36 +26,34 @@ yum install docker -y
 usermod -a -G docker template
 id template
 newgrp docker
-systemctl start httpd
-systemctl enable httpd
-/home/ec2-user/bia/build.sh
-
-# Criar arquivo de configuração do Apache para o site
-cat <<EOL | tee /etc/httpd/conf.d/teste1.conf
-<VirtualHost *:80>
-    DocumentRoot "/var/www/html/teste1"
-    ServerName localhost
-
-    <Directory "/var/www/html/teste1">
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>
-EOL
+systemctl start docker
+systemctl enable docker
 
 # Parar o serviço Apache para liberar a porta 80
 systemctl stop httpd
 
-# Instalar docker compose 2
+# Instalar Docker Compose 2
 mkdir -p /usr/local/lib/docker/cli-plugins
 curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
 chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 ln -s /usr/local/lib/docker/cli-plugins/docker-compose /usr/local/bin/docker-compose
 
 # Validar instalação do Docker Compose
-docker compose version
+docker-compose version
 
 # Instalar node e npm
 curl -fsSL https://rpm.nodesource.com/setup_21.x | bash -
 yum install -y nodejs
 
+# Clonar o repositório do GitHub
+git clone https://github.com/sniperpsp/cicd-ec2-site.git /mnt/site
+
+# Navegar para a pasta onde o docker-compose.yml está localizado
+cd /mnt/site
+
+# Construir as imagens Docker
+docker build -t node-todo-app .
+docker build -t banco-de-dados -f Dockerfile-postgres .
+
+# Subir os serviços com docker-compose
+docker-compose up -d
