@@ -1,4 +1,4 @@
-name: Manage EC2 Environment
+name: Destruir Ambiente
 
 on:
   push:
