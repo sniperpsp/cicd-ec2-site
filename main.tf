@@ -8,3 +8,12 @@ terraform {
 
   required_version = ">= 1.2.0"
 }
+
+terraform {
+  backend "s3" {
+    bucket         = "bucket-teste124"
+    key            = "terraformstate/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "ec2-terraform-lock-table"
+  }
+}
