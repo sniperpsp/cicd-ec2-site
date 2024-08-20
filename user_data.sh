@@ -65,4 +65,3 @@ docker build -t banco-de-dados -f Dockerfile-postgres .
 docker-compose up -d
 
 cd /mnt
-ls -la
